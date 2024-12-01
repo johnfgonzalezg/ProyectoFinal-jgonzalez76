@@ -283,7 +283,7 @@ def query():
     Returns:
         Response: Página HTML `api.html` con los resultados de la consulta en formato JSON.
     """
-    base_url = "http://localhost:5000/api"
+    base_url = "https://proyectofinal-jgonzalez76-production.up.railway.app//api"
     endpoint = request.args.get('endpoint')
     param1 = request.args.get('param1')
     param2 = request.args.get('param2')
