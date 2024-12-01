@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block content %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+<div class="grid-container">
+    <a href="{{ url_for('ingredient.index') }}" class="grid-item">
+        <i class="fas fa-boxes"></i>
+        <span>Inventario de Ingredientes</span>
+    </a>
+    <a href="{{ url_for('product.index') }}" class="grid-item">
+        <i class="fas fa-utensils"></i>
+        <span>Menú de Productos</span>
+    </a>
+    <a href="{{ url_for('ice_cream_shop.sold_product') }}" class="grid-item">
+        <i class="fas fa-shopping-cart"></i>
+        <span>Vender Producto</span>
+    </a>
+    <a href="{{ url_for('ice_cream_shop.most_profitable_product') }}" class="grid-item">
+        <i class="fas fa-chart-line"></i>
+        <span>Validar Producto Más Rentable</span>
+    </a>
+    <a href="{{ url_for('ice_cream_shop.daily_sails') }}" class="grid-item">
+        <i class="fas fa-cash-register"></i>
+        <span>Ver las Ventas del Día</span>
+    </a>
+    <a href="{{ url_for('api.api_index') }}" class="grid-item">
+        <i class="fas fa-code"></i>
+        <span>Consultar API</span>
+    </a>
+    <a href="{{ url_for('user.logout') }}" class="grid-item">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+    </a>
+</div>
+{% endblock %}
+

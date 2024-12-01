@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1>Consultar API</h1>
+<form method="GET" action="{{ url_for('api.api_query') }}">
+    <div class="form">
+        <label for="endpoint">Endpoint</label>
+        <select id="endpoint" name="endpoint" onchange="toggleParams()" required>
+            <option value="product/all">Todos los Productos</option>
+            <option value="product/id">Producto por ID</option>
+            <option value="product/name">Producto por Nombre</option>
+            <option value="product/calories">Calorías del Producto</option>
+            {% if is_admin %}
+                <option value="product/profitability">Rentabilidad del Producto</option>
+            {% endif %}
+            <option value="product/cost">Costo del Producto</option>
+            <option value="product/sold">Vender Producto</option>
+            {% if is_admin or is_employee %}
+                <option value="ingredient/all">Todos los Ingredientes</option>
+                <option value="ingredient/id">Ingrediente por ID</option>
+                <option value="ingredient/name">Ingrediente por Nombre</option>
+                <option value="ingredient/is_healthy">Ingrediente Saludable</option>
+                <option value="ingredient/supply">Reabastecer Ingrediente</option>
+                <option value="ingredient/renew">Renovar Inventario</option>
+            {% endif %}
+        </select>
+    </div>
+    <div class="form-group" id="param1-group">
+        <label for="param1">Parámetro 1 (ID)</label>
+        <input type="text" id="param1" name="param1" placeholder="Valor del parámetro 1" required>
+    </div>
+    <div class="form-group" id="param2-group">
+        <label for="param2">Parámetro 2 (Nombre)</label>
+        <input type="text" id="param2" name="param2" placeholder="Valor del parámetro 2">
+    </div>
+    <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i>Consultar</button>
+</form>
+
+<!-- Lugar para mostrar los resultados de la consulta -->
+<div class="results">
+    {% if results %}
+        <h2>Resultados de la Consulta</h2>
+        <pre class="json-pretty">{{ results }}</pre>
+    {% else %}
+        <p>No hay resultados para mostrar.</p>
+    {% endif %}
+</div>
+{% if is_admin %}
+    <a href="{{ url_for('user.admin_dashboard') }}" class="button back-button">Volver</a>
+{% elif is_employee %}
+    <a href="{{ url_for('user.employee_dashboard') }}" class="button back-button">Volver</a>
+{%elif is_logued%}
+    <a href="{{ url_for('user.client_dashboard') }}" class="button back-button">Volver</a>
+{% else %}
+    <a href="{{ url_for('user.client_dashboard') }}" class="button back-button">Volver</a>
+{% endif %}
+</div>
+<script>
+    function toggleParams() {
+        debugger;
+        var endpoint = document.getElementById('endpoint').value;
+        var param1Group = document.getElementById('param1-group');
+        var param2Group = document.getElementById('param2-group')
+
+        if (endpoint === 'product/all' || endpoint === 'ingredient/all') {
+            param1Group.style.display = 'none';
+            param2Group.style.display = 'none';
+            document.getElementById('param1').removeAttribute('required');
+            document.getElementById('param2').removeAttribute('required');
+        } 
+        else if (endpoint === 'product/name' || endpoint === 'ingredient/name' || endpoint === 'product/sold'){
+            param1Group.style.display = 'none';
+            param2Group.style.display = 'block';
+            document.getElementById('param1').removeAttribute('required');
+            document.getElementById('param2').setAttribute('required', 'required');
+        }
+        else {
+            param1Group.style.display = 'block';
+            param2Group.style.display = 'default';
+            document.getElementById('param1').setAttribute('required', 'required');
+            document.getElementById('param2').removeAttribute('required');
+        }
+    }
+
+    window.onload = function() {
+        toggleParams();
+        document.getElementById('endpoint').addEventListener('change', toggleParams);
+    };
+</script>
+{% endblock %}

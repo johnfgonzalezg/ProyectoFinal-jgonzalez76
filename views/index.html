@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="grid-container">
+    <a href="{{ url_for('product.index') }}" class="grid-item">
+        <i class="fas fa-utensils"></i>
+        <span>Menú de Productos</span>
+    </a>
+    <a href="{{ url_for('user.login') }}" class="grid-item">
+        <i class="fas fa-sign-in-alt"></i>
+        <span>Login</span>
+    </a>
+</div>
+{% endblock %}
