@@ -50,7 +50,7 @@ def unauthorized_error(error):
     """ 
     return jsonify({'Mensaje': 'No se encuentra autorizado para realizar la operación'}), 401
 
-app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{os.getenv('DB_USERNAME')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}'
+app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{os.getenv('DB_USERNAME')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = secret_key
 app.config['SESSION_COOKIE_SECURE'] = True 
